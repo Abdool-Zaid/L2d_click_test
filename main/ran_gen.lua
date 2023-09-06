@@ -11,9 +11,9 @@ local color= "#"
 end
 function random.color_RGB()
     local res = {}
-        res.r= math.random(255)
-        res.g= math.random(255)
-        res.b= math.random(255)
+        res.r= math.random()
+        res.g= math.random()
+        res.b= math.random()
     return res
 end
 return random
