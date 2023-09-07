@@ -1,14 +1,49 @@
 local ran = require("ran_gen")
-function love.draw()
+local tar = {}
+local score= 0
+local dt 
+
+function love.load ()
+    dt = love.timer.getTime()
+    tar.size=20
+    tar.color= ran.color_RGB()
     local width = love.graphics.getWidth()
     local height = love.graphics.getHeight()
-    local tar = {}
-        tar.size=20
-        tar.color= ran.color_RGB()
-        tar.x= math.random(width)
-        tar.y=math.random(height)
-love.graphics.setColor(1,1,1)
-love.graphics.print(tar.color.r.." ".. tar.color.g.. " ".. tar.color.b, 1,1)
-love.graphics.setColor(tar.color.r,tar.color.g,tar.color.b)
-love.graphics.circle("fill",tar.x,tar.y,tar.size)
+    tar.x= math.random(width)
+    tar.y=math.random(height)
+    end
+
+    local clickX, clickY = -1, -1
+
+function love.mousepressed(x, y, button, istouch, presses)
+    -- Check if the left mouse button was pressed (button 1)
+    if button == 1 then
+        -- Store the coordinates of the mouse click
+        clickX, clickY = x, y
+    end
+end
+
+
+function love.update(dt)
+
+    
+        if clickX >= 0 and clickY >= 0 then
+            if clickX <= tar.x then
+                score= score + 1
+                clickX, clickY = -1
+            end 
+        end
+
+end    
+        
+function love.draw()
+    local dur= love.timer.getTime() - dt
+    love.graphics.print("score: ".. score)
+    love.graphics.setColor(tar.color.r,tar.color.g,tar.color.b)
+    love.graphics.circle("fill",tar.x,tar.y,tar.size)
+    
+        if clickX >= 0 and clickY >= 0 then
+            love.graphics.setColor(255, 0, 0)  -- Set color to red
+            love.graphics.circle("fill", clickX, clickY, 10)  -- Draw a filled circle
+        end
 end
