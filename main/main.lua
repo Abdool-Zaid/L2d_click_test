@@ -1,4 +1,5 @@
 local ran = require("ran_gen")
+local logic = require("logic")
 local tar = {}
 local score= 0
 local dt 
@@ -28,9 +29,10 @@ function love.update(dt)
 
     
         if clickX >= 0 and clickY >= 0 then
-            if clickX <= tar.x then
-                score= score + 1
-                clickX, clickY = -1
+            local hit = logic.check_pos(tar.x,tar.y,tar.size,clickX,clickY)
+            if hit == true then
+            score   = score + 1
+            clickX, clickY = -1
             end 
         end
 
