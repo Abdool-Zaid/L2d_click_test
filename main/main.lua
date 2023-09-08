@@ -5,8 +5,8 @@ local score= 0
 local dt 
 
 function love.load ()
-    hit = love.audio.newSource("./assets/audio/hit.wav", "static")
-    miss = love.audio.newSource("./assets/audio/miss.wav", "static")
+    hitSFX = love.audio.newSource("assets/audio/hit.wav", "static")
+    missSfX = love.audio.newSource("assets/audio/miss.wav", "static")
     dt = love.timer.getTime()
     tar.size=20
     local width = love.graphics.getWidth()
@@ -32,7 +32,7 @@ function love.update(dt)
         local hit = logic.check_pos(tar.x,tar.y,tar.size,clickX,clickY)
         if hit == true then
             score, clickX,clickY = logic.alter_score(score , 1)
-            love.audio.play(hit)
+            love.audio.play(hitSFX)
             local width = love.graphics.getWidth()
             local height = love.graphics.getHeight()
             tar.color= ran.color_RGB()
@@ -53,7 +53,7 @@ function love.draw()
     
     if clickX >= 0 and clickY >= 0 then
         love.graphics.setColor(255, 0, 0)  
-        love.audio.play(miss)
+        love.audio.play(missSfX)
         love.graphics.circle("fill", clickX, clickY, 10)
         score, clickX,clickY = logic.alter_score(score , -1)
                  
